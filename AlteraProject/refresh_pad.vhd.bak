@@ -1,0 +1,52 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity refresh_pad is
+	port(
+		clk, reset:			 in std_logic;
+		tick100Hz:	 		out std_logic;
+		tick200Hz:	 		out std_logic
+	);
+end refresh_pad;
+
+architecture arch of refresh_pad is
+	constant Cicles100Hz:	integer := 50e04; --50MHz / 100
+	constant Cicles200Hz:	integer := 25e04; --50MHz / 200
+	signal cont100, cont100_next: integer := 0;
+	signal cont200, cont200_next: integer := 0;
+begin
+	process( clk, reset )
+	begin
+		if( reset = '1' ) then
+			cont100 <= 0;
+			cont200 <= 0;
+		elsif( clk'event and clk='1' ) then
+			cont100 <= cont100_next;
+			cont200 <= cont200_next;
+		end if;
+	end process;
+	
+	process( clk )
+	begin
+		tick100Hz    <= '0';
+		tick200Hz    <= '0';
+		
+		if( clk'event and clk='1' ) then
+			if( cont100 < Cicles100Hz ) then
+				cont100_next <= cont100 + 1;
+			else
+				cont100_next <= 0;
+				tick100Hz    <= '1';
+			end if;
+			
+			if( cont200 < Cicles200Hz ) then
+				cont200_next <= cont200 + 1;
+			else
+				cont200_next <= 0;
+				tick200Hz    <= '1';
+			end if;
+		end if;
+	end process;
+	
+end arch;

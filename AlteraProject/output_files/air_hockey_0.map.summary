@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Mon Dec 07 14:55:09 2015
+Quartus II 64-Bit Version : 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition
+Revision Name : air_hockey_0
+Top-level Entity Name : schematic
+Family : Cyclone II
+Total logic elements : 12,262
+    Total combinational functions : 12,257
+    Dedicated logic registers : 381
+Total registers : 381
+Total pins : 46
+Total virtual pins : 0
+Total memory bits : 0
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0

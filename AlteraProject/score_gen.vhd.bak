@@ -1,0 +1,44 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use work.TIPOS.all;
+
+entity score_gen is
+	port(
+		clk, reset:			in std_logic;
+		pixel_x, pixel_y:	in std_logic_vector(9 downto 0);
+		
+		goal_tick:			in std_logic_vector(1 downto 0);
+		
+		obj_on:				out std_logic;
+		obj_RGB:				out TYPE_COR
+	);
+end score_gen;
+
+architecture arch of score_gen is
+	--Dimensoes da Imagem na tela
+	constant LINHAS:   integer := 16;
+	constant COLUNAS:  integer := 8;
+	constant CHARS:	 integer := 3;
+	constant obj_Ymin: integer := 0;
+	constant obj_Xmin: integer := 640/2    - (CHARS*COLUNAS)/2;
+	constant obj_Xmax: integer := obj_Xmin + (CHARS*COLUNAS)/2;
+	constant obj_Ymax: integer := obj_Ymin + COLUNAS;
+	
+	signal pix_x: unsigned(9 downto 0) := unsigned( pixel_x );
+	signal pix_y: unsigned(9 downto 0) := unsigned( pixel_y );
+	
+	begin
+		
+		pix_x 	<= unsigned( pixel_x );
+		pix_y 	<= unsigned( pixel_y );
+		
+		process( pix_x, pix_y )
+		begin
+			obj_on 		<= '0';
+			obj_RGB(0)  <= "00000000";
+			obj_RGB(1)  <= "00000000";
+			obj_RGB(2)	<= "00000000";
+		end process;
+		
+end arch;
